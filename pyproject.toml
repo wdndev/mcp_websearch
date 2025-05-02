@@ -1,0 +1,19 @@
+[project]
+name = "mcp-websearch"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "asyncio>=3.4.3",
+    "baidusearch>=1.0.3",
+    "duckduckgo-search>=8.0.1",
+    "googlesearch-python>=1.3.0",
+    "loguru>=0.7.3",
+    "lxml[html-clean]>=5.4.0",
+    "playwright>=1.52.0",
+    "python-dotenv>=1.1.0",
+    "readability-lxml>=0.8.1",
+    "mcp[cli]>=1.6.0",
+    "ujson>=5.10.0",
+]
