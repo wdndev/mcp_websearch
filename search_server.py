@@ -6,7 +6,6 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional, Literal, Any
 
-from dotenv import load_dotenv
 from loguru import logger
 from pydantic import BaseModel, Field
 from mcp.server.fastmcp import Context, FastMCP
@@ -18,8 +17,6 @@ from src.websearch.ddgs_search import DdgsSearchEngine
 from src.websearch.google_search import GoogleSearchEngine
 from src.scraper.base_scraper import BaseScraper
 from src.scraper.playwright_scraper import PlaywrightScraper
-
-load_dotenv()
 
 class SearchEngineType(Enum):
     """Search services type.
@@ -35,7 +32,6 @@ class WebScrapeResult(BaseModel):
     title: Optional[str] = None
     url: str = Field(..., description="The URL of the scrape result")
     text: str = Field(..., description="Extracted text content from the page")
-    html: Optional[str] = Field(None, description="Raw HTML content of the page")
     source: Optional[str] = Field(None, description="Search engine used for this result")
 
 class WebSearchResult(BaseModel):
@@ -44,7 +40,6 @@ class WebSearchResult(BaseModel):
     title: Optional[str] = None
     position: Optional[int] = None
     description: Optional[str] = None
-    metadata: Optional[Any] = None
 
 @dataclass
 class MCPContext:
@@ -121,8 +116,7 @@ async def search_web_data_from_query(
             url=result.url,
             title=result.title,
             position=result.position,
-            description=result.description,
-            metadata=result.metadata
+            description=result.description
         ))
 
     return results
@@ -148,7 +142,6 @@ async def fetch_web_data_from_url(
             url=url,
             title=result.title,
             text=result.text,
-            html=result.html,
             source="direct_scrape"
         )
 
@@ -207,7 +200,6 @@ async def fetch_web_data_from_query(
             url=search_result.url,
             title=content.title,
             text=content.text,
-            html=content.html,
             source=search_type
         ))
 
